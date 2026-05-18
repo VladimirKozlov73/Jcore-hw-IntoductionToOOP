@@ -26,17 +26,27 @@ public class ProductBasket {
     }
 
     public void print() {
-        int total = getTotalPrice();  // Вычисляем один раз для эффективности
+        int total = getTotalPrice();
+        int specialCount = 0;
+
         if (total == 0) {
             System.out.println("в корзине пусто");
+            System.out.println("Итого: 0");
+            System.out.println("Специальных товаров: 0");
             return;
         }
+
         for (Product p : products) {
             if (p != null) {
-                System.out.println(p.getName() + ": " + p.getPrice());
+                System.out.println(p.toString());
+                if (p.isSpecial()) {
+                    specialCount++;
+                }
             }
         }
+
         System.out.println("Итого: " + total);
+        System.out.println("Специальных товаров: " + specialCount);
     }
 
     public boolean contains(String name) {
