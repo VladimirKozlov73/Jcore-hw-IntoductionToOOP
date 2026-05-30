@@ -1,44 +1,46 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.*;
 
 public class App {
     public static void main(String[] args) {
+        String separator = "-".repeat(11);
+
         ProductBasket basket = new ProductBasket();
 
-        // Добавление продукта в корзину
-        Product phone = new Product("Телефон", 10000);
+        // Обычный товар
+        Product phone = new SimpleProduct("Телефон", 10000);
         basket.add(phone);
 
-        // Добавление продуктов в корзину, добавление продукта в заполненную корзину
+        // Несколько обычных товаров
         for (int i = 0; i < 4; i++) {
-            basket.add(new Product("Товар" + i, 1000));
+            basket.add(new SimpleProduct("Товар" + i, 1000));
         }
-        basket.add(new Product("Ещё товар", 500));  // Вывод: "Невозможно добавить продукт"
-
-        // Печать содержимого корзины
+        basket.add(new SimpleProduct("Ещё товар", 500));
         basket.print();
+        System.out.println(separator);
 
-        // Получение стоимости корзины
-        System.out.println("Стоимость: " + basket.getTotalPrice());
-
-        // Поиск существующего продукта в корзине
-        System.out.println("Есть телефон: " + basket.contains("Телефон"));
-
-        // Поиск несуществующего продукта в корзине
-        System.out.println("Есть несуществующий: " + basket.contains("Нет"));
-
-        // Очистка корзины
+        // Товары со скидкой
         basket.clear();
+        basket.add(new SimpleProduct("Часы", 5000));
+        basket.add(new DiscountedProduct("Наушники", 3000, 20));
+        basket.add(new FixPriceProduct("Флэшка"));
 
-        // Печать пустой корзины
         basket.print();
 
-        // Стоимость пустой корзины
-        System.out.println("Стоимость пустой: " + basket.getTotalPrice());
+        System.out.println("Стоимость: " + basket.getTotalPrice());
+        System.out.println(separator);
 
-        // Поиск в пустой корзине
+        System.out.println("Есть часы: " + basket.contains("Часы"));
+        System.out.println("Есть несуществующий: " + basket.contains("Нет"));
+        System.out.println(separator);
+
+        basket.clear();
+        basket.print();
+        System.out.println(separator);
+
+        System.out.println("Стоимость пустой: " + basket.getTotalPrice());
         System.out.println("Поиск в пустой: " + basket.contains("Телефон"));
     }
 }
