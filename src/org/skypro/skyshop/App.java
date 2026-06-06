@@ -89,5 +89,103 @@ public class App {
 
         System.out.println("Поиск по 'Часы':");
         System.out.println(Arrays.toString(searchEngine.search("Часы")));
+        System.out.println(separator);
+
+        // проверки в конструкторах
+        System.out.println("\nпроверки в конструкторах\n");
+
+        // Проверка Product
+        System.out.println("1. Проверка пустого названия продукта:");
+        try {
+            Product invalidProduct = new SimpleProduct("", 1000);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        System.out.println("\n2. Проверка null названия продукта:");
+        try {
+            Product invalidProduct = new SimpleProduct(null, 1000);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        System.out.println("\n3. Проверка названия из пробелов:");
+        try {
+            Product invalidProduct = new SimpleProduct("   ", 1000);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        // Проверка SimpleProduct
+        System.out.println("\n4. Проверка цены <= 0 в SimpleProduct:");
+        try {
+            Product invalidProduct = new SimpleProduct("Товар", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        System.out.println("\n5. Проверка отрицательной цены в SimpleProduct:");
+        try {
+            Product invalidProduct = new SimpleProduct("Товар", -100);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        // Проверка DiscountedProduct
+        System.out.println("\n6. Проверка базовой цены <= 0 в DiscountedProduct:");
+        try {
+            Product invalidProduct = new DiscountedProduct("Товар", 0, 20);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        System.out.println("\n7. Проверка скидки < 0 в DiscountedProduct:");
+        try {
+            Product invalidProduct = new DiscountedProduct("Товар", 1000, -10);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        System.out.println("\n8. Проверка скидки > 100 в DiscountedProduct:");
+        try {
+            Product invalidProduct = new DiscountedProduct("Товар", 1000, 150);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+
+        //  проверка работы findBestResult
+        System.out.println("\nтест метода findBestResult\n");
+
+        System.out.println("1. Поиск наиболее подходящего результата для существующего объекта:");
+        try {
+            Searchable best = searchEngine.findBestResult("телефон");
+            System.out.println("Наиболее подходящий: " + best.getStringRepresentation());
+            System.out.println("SearchTerm: " + best.getSearchTerm());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        System.out.println(separator);
+
+        System.out.println("\n2. Поиск наиболее подходящего результата для несуществующего объекта:");
+        try {
+            Searchable best = searchEngine.findBestResult("несуществующий_запрос");
+            System.out.println("Наиболее подходящий: " + best.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
+        System.out.println(separator);
+
+        System.out.println("\n3. Поиск с несколькими повторениями:");
+        try {
+
+            Article article4 = new Article("Телефон телефон телефон", "Телефон это телефон");
+            searchEngine.add(article4);
+
+            Searchable best = searchEngine.findBestResult("телефон");
+            System.out.println("Наиболее подходящий: " + best.getStringRepresentation());
+            System.out.println("SearchTerm: " + best.getSearchTerm());
+        } catch (BestResultNotFound e) {
+            System.out.println("Ошибка: " + e.getMessage());
+        }
     }
 }
