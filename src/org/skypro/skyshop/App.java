@@ -187,5 +187,37 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println("Ошибка: " + e.getMessage());
         }
+
+        System.out.println("\n4. Строка поиска содержит только пробелы");
+        try {
+            Searchable best = searchEngine.findBestResult("   ");
+            System.out.println("Найдено: " + best.getStringRepresentation());
+        } catch (IllegalArgumentException e) {
+            System.out.println("IllegalArgumentException: " + e.getMessage());
+        } catch (BestResultNotFound e) {
+            System.out.println("BestResultNotFound: " + e.getMessage());
+        }
+        System.out.println(separator);
+
+        System.out.println("\n5. Строка поиска пустая");
+        try {
+            Searchable best = searchEngine.findBestResult("");
+            System.out.println("Найдено: " + best.getStringRepresentation());
+        } catch (IllegalArgumentException e) {
+            System.out.println("IllegalArgumentException: " + e.getMessage());
+        } catch (BestResultNotFound e) {
+            System.out.println("BestResultNotFound: " + e.getMessage());
+        }
+        System.out.println(separator);
+
+        System.out.println("\n6. Строка поиска null");
+        try {
+            Searchable best = searchEngine.findBestResult(null);
+            System.out.println("Найдено: " + best.getStringRepresentation());
+        } catch (IllegalArgumentException e) {
+            System.out.println("IllegalArgumentException: " + e.getMessage());
+        } catch (BestResultNotFound e) {
+            System.out.println("BestResultNotFound: " + e.getMessage());
+        }
     }
 }

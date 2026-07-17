@@ -34,6 +34,11 @@ public class SearchEngine {
     }
 
     public Searchable findBestResult(String search) throws BestResultNotFound {
+
+        if (search == null || search.trim().isEmpty()){
+            throw new IllegalArgumentException("Строка поиска не может быть пустой или null");
+        }
+
         Searchable bestResult = null;
         int maxCount = 0;
 
