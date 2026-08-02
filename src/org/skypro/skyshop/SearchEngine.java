@@ -32,4 +32,47 @@ public class SearchEngine {
 
         return results;
     }
+
+    public Searchable findBestResult(String search) throws BestResultNotFound {
+
+        if (search == null || search.trim().isEmpty()){
+            throw new IllegalArgumentException("Строка поиска не может быть пустой или null");
+        }
+
+        Searchable bestResult = null;
+        int maxCount = 0;
+
+        for (int i = 0; i < count; i++) {
+            Searchable item = items[i];
+            if (item != null) {
+                String searchTerm = item.getSearchTerm();
+                int count = countOccurrences(searchTerm, search);
+
+                if (count > maxCount) {
+                    maxCount = count;
+                    bestResult = item;
+                }
+            }
+        }
+
+        if (bestResult == null) {
+            throw new BestResultNotFound(search);
+        }
+
+        return bestResult;
+    }
+
+    private int countOccurrences(String str, String substring) {
+        int count = 0;
+        int index = 0;
+        int indexSubstring = str.indexOf(substring, index);
+
+        while (indexSubstring != -1) {
+            count++;
+            index = indexSubstring + substring.length();
+            indexSubstring = str.indexOf(substring, index);
+        }
+
+        return count;
+    }
 }
