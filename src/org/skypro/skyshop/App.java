@@ -3,7 +3,7 @@ package org.skypro.skyshop;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
 
-import java.util.Arrays;
+import java.util.List;
 
 public class App {
     public static void main(String[] args) {
@@ -20,7 +20,7 @@ public class App {
             basket.add(new SimpleProduct("Товар" + i, 1000));
         }
         basket.add(new SimpleProduct("Ещё товар", 500));
-        basket.print();
+        basket.printBasket();
         System.out.println(separator);
 
         // Товары со скидкой
@@ -29,7 +29,7 @@ public class App {
         basket.add(new DiscountedProduct("Наушники", 3000, 20));
         basket.add(new FixPriceProduct("Флэшка"));
 
-        basket.print();
+        basket.printBasket();
 
         System.out.println("Стоимость: " + basket.getTotalPrice());
         System.out.println(separator);
@@ -39,11 +39,34 @@ public class App {
         System.out.println(separator);
 
         basket.clear();
-        basket.print();
+        basket.printBasket();
         System.out.println(separator);
 
         System.out.println("Стоимость пустой: " + basket.getTotalPrice());
         System.out.println("Поиск в пустой: " + basket.contains("Телефон"));
+        System.out.println(separator);
+
+        //удаление продуктов из корзины
+        basket.clear();
+        basket.add(new SimpleProduct("Часы", 5000));
+        basket.add(new DiscountedProduct("Наушники", 3000, 20));
+        basket.add(new FixPriceProduct("Флэшка"));
+        basket.add(new SimpleProduct("Часы", 7000));
+
+        System.out.println("Удаляем существующий продукт: Часы");
+        List<Product> removedProducts = basket.removeByName("Часы");
+        for (Product product : removedProducts) {
+            System.out.println(product);
+        }
+        basket.printBasket();
+        System.out.println(separator);
+
+        System.out.println("Удаляем несуществующий продукт: Телефон");
+        List<Product> removedEmpty = basket.removeByName("Телефон");
+        if (removedEmpty.isEmpty()) {
+            System.out.println("Список пуст");
+        }
+        basket.printBasket();
         System.out.println(separator);
 
         // тест поиска
@@ -72,23 +95,38 @@ public class App {
         searchEngine.add(article3);
 
         System.out.println("Поиск по 'телефон':");
-        System.out.println(Arrays.toString(searchEngine.search("телефон")));
+        List<Searchable> searchResult1 = searchEngine.search("телефон");
+        for (Searchable item : searchResult1) {
+            System.out.println(item.getStringRepresentation());
+        }
         System.out.println(separator);
 
         System.out.println("Поиск по 'науш':");
-        System.out.println(Arrays.toString(searchEngine.search("науш")));
+        List<Searchable> searchResult2 = searchEngine.search("науш");
+        for (Searchable item : searchResult2) {
+            System.out.println(item.getStringRepresentation());
+        }
         System.out.println(separator);
 
         System.out.println("Поиск по 'здоровье':");
-        System.out.println(Arrays.toString(searchEngine.search("здоровье")));
+        List<Searchable> searchResult3 = searchEngine.search("здоровье");
+        for (Searchable item : searchResult3) {
+            System.out.println(item.getStringRepresentation());
+        }
         System.out.println(separator);
 
         System.out.println("Поиск по 'флэ':");
-        System.out.println(Arrays.toString(searchEngine.search("флэ")));
+        List<Searchable> searchResult4 = searchEngine.search("флэ");
+        for (Searchable item : searchResult4) {
+            System.out.println(item.getStringRepresentation());
+        }
         System.out.println(separator);
 
         System.out.println("Поиск по 'Часы':");
-        System.out.println(Arrays.toString(searchEngine.search("Часы")));
+        List<Searchable> searchResult5 = searchEngine.search("Часы");
+        for (Searchable item : searchResult5) {
+            System.out.println(item.getStringRepresentation());
+        }
         System.out.println(separator);
 
         // проверки в конструкторах
