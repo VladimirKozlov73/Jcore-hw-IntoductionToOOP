@@ -4,6 +4,7 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.*;
 
 import java.util.List;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) {
@@ -95,36 +96,36 @@ public class App {
         searchEngine.add(article3);
 
         System.out.println("Поиск по 'телефон':");
-        List<Searchable> searchResult1 = searchEngine.search("телефон");
-        for (Searchable item : searchResult1) {
+        Map<String, Searchable> searchResult1 = searchEngine.search("телефон");
+        for (Searchable item : searchResult1.values()) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'науш':");
-        List<Searchable> searchResult2 = searchEngine.search("науш");
-        for (Searchable item : searchResult2) {
+        Map<String, Searchable> searchResult2 = searchEngine.search("науш");
+        for (Searchable item : searchResult2.values()) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'здоровье':");
-        List<Searchable> searchResult3 = searchEngine.search("здоровье");
-        for (Searchable item : searchResult3) {
+        Map<String, Searchable> searchResult3 = searchEngine.search("здоровье");
+        for (Searchable item : searchResult3.values()) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'флэ':");
-        List<Searchable> searchResult4 = searchEngine.search("флэ");
-        for (Searchable item : searchResult4) {
+        Map<String, Searchable> searchResult4 = searchEngine.search("флэ");
+        for (Searchable item : searchResult4.values()) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'Часы':");
-        List<Searchable> searchResult5 = searchEngine.search("Часы");
-        for (Searchable item : searchResult5) {
+        Map<String, Searchable> searchResult5 = searchEngine.search("Часы");
+        for (Searchable item : searchResult5.values()) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);

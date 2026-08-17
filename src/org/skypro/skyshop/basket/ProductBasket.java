@@ -2,21 +2,24 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductBasket {
-    private final List<Product> products = new LinkedList<>();
+    private final Map<String, List<Product>> products = new HashMap<>();
 
     public void add(Product product) {
-        products.add(product);
+        products.computeIfAbsent(product.getName(), key -> new ArrayList<>()).add(product);
     }
 
     public int getTotalPrice() {
         int sum = 0;
-        for (Product p : products) {
-            sum += p.getPrice();
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                sum += product.getPrice();
+            }
         }
         return sum;
     }
@@ -32,11 +35,13 @@ public class ProductBasket {
             return;
         }
 
-        for (Product p : products) {
-            System.out.println(p.toString());
-                if (p.isSpecial()) {
+        for (List<Product> productList : products.values()) {
+            for (Product product : productList) {
+                System.out.println(product);
+                if (product.isSpecial()) {
                     specialCount++;
                 }
+            }
         }
 
         System.out.println("Итого: " + total);
@@ -44,12 +49,7 @@ public class ProductBasket {
     }
 
     public boolean contains(String name) {
-        for (Product p : products) {
-            if (p.getName().equals(name)) {
-                return true;
-            }
-        }
-        return false;
+        return products.containsKey(name);
     }
 
     public void clear() {
@@ -57,17 +57,10 @@ public class ProductBasket {
     }
 
     public List<Product> removeByName(String name) {
-        List<Product> removedProducts = new LinkedList<>();
-        Iterator<Product> iterator = products.iterator();
-
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            if (product.getName().equals(name)) {
-                removedProducts.add(product);
-                iterator.remove();
+        List<Product> removedProducts = products.remove(name);
+            if (removedProducts == null) {
+                return new ArrayList<>();
             }
-        }
-
         return removedProducts;
     }
 }
