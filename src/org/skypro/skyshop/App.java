@@ -5,6 +5,7 @@ import org.skypro.skyshop.product.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
@@ -96,36 +97,36 @@ public class App {
         searchEngine.add(article3);
 
         System.out.println("Поиск по 'телефон':");
-        Map<String, Searchable> searchResult1 = searchEngine.search("телефон");
-        for (Searchable item : searchResult1.values()) {
+        Set<Searchable> searchResult1 = searchEngine.search("телефон");
+        for (Searchable item : searchResult1) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'науш':");
-        Map<String, Searchable> searchResult2 = searchEngine.search("науш");
-        for (Searchable item : searchResult2.values()) {
+        Set<Searchable> searchResult2 = searchEngine.search("науш");
+        for (Searchable item : searchResult2) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'здоровье':");
-        Map<String, Searchable> searchResult3 = searchEngine.search("здоровье");
-        for (Searchable item : searchResult3.values()) {
+        Set<Searchable> searchResult3 = searchEngine.search("здоровье");
+        for (Searchable item : searchResult3) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'флэ':");
-        Map<String, Searchable> searchResult4 = searchEngine.search("флэ");
-        for (Searchable item : searchResult4.values()) {
+        Set<Searchable> searchResult4 = searchEngine.search("флэ");
+        for (Searchable item : searchResult4) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
 
         System.out.println("Поиск по 'Часы':");
-        Map<String, Searchable> searchResult5 = searchEngine.search("Часы");
-        for (Searchable item : searchResult5.values()) {
+        Set<Searchable> searchResult5 = searchEngine.search("Часы");
+        for (Searchable item : searchResult5) {
             System.out.println(item.getStringRepresentation());
         }
         System.out.println(separator);
