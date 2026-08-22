@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private final Set<Searchable> items;
@@ -19,18 +20,13 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String query) {
-        Set<Searchable> results = new TreeSet<>(
-                Comparator.comparingInt((Searchable s) -> s.getName().length())
-                        .reversed().thenComparing(Searchable::getName)
-        );
-
-        for (Searchable item : items) {
-            if (item.getSearchTerm().contains(query)) {
-                results.add(item);
-            }
-        }
-
-        return results;
+        return items.stream()
+                .filter(item -> item.getSearchTerm().contains(query))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(
+                        Comparator.comparingInt((Searchable s) -> s.getName().length())
+                                .reversed()
+                                .thenComparing(Searchable::getName)
+                )));
     }
 
     public Searchable findBestResult(String search) throws BestResultNotFound {
