@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Collection;
 
 public class ProductBasket {
     private final Map<String, List<Product>> products = new HashMap<>();
@@ -15,19 +16,13 @@ public class ProductBasket {
     }
 
     public int getTotalPrice() {
-        int sum = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                sum += product.getPrice();
-            }
-        }
-        return sum;
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     public void printBasket() {
-        int total = getTotalPrice();
-        int specialCount = 0;
-
         if (products.isEmpty()) {
             System.out.println("в корзине пусто");
             System.out.println("Итого: 0");
@@ -35,17 +30,19 @@ public class ProductBasket {
             return;
         }
 
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                System.out.println(product);
-                if (product.isSpecial()) {
-                    specialCount++;
-                }
-            }
-        }
+        products.values().stream()
+                .flatMap(Collection::stream)
+                .forEach(System.out::println);
 
-        System.out.println("Итого: " + total);
-        System.out.println("Специальных товаров: " + specialCount);
+        System.out.println("Итого: " + getTotalPrice());
+        System.out.println("Специальных товаров: " + getSpecialCount());
+    }
+
+    private long getSpecialCount() {
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public boolean contains(String name) {
